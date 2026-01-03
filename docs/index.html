@@ -31,6 +31,9 @@
     <script type="module" crossorigin src="/alperkose-website/assets/index-d_xqxAZt.js"></script>
     <link rel="stylesheet" crossorigin href="/alperkose-website/assets/index-CC7C7e7Q.css">
 <style>
+  /* İLK AÇILIŞTA GİZLE */
+.career-timeline-wrapper { opacity: 0; transition: opacity 0.5s ease; }
+body.loaded .career-timeline-wrapper { opacity: 1; }
   /* --- MOBİL CİHAZ (TELEFON) AYARLARI --- */
   @media (max-width: 768px) {
     
@@ -153,5 +156,10 @@
 
   </div>
 </div>
+<script>
+  window.addEventListener('load', function() {
+    document.body.classList.add('loaded');
+  });
+</script>
     </body>
 </html>
