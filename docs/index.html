@@ -243,6 +243,213 @@ body.loaded .career-timeline-wrapper { opacity: 1; }
              if (attempts > 5) clearInterval(interval); // 5 kere denedikten sonra dur
         }, 300); 
     };
+<script>
+    // 1. TİMELİNE (HTML İçindeki Sabit Metinler - Zaten Sende Var)
+    const translations = {
+        tr: {
+            lisans: "Lisans",
+            lisans_bolum: "Endüstriyel Tasarım",
+            onlisans: "Ön Lisans",
+            onlisans_bolum: "Bilgisayar Programcılığı",
+            mezuniyet: "Mezuniyet",
+            yuksek_lisans: "Yüksek Lisans",
+            yuksek_lisans_bolum: "Endüstriyel Tasarım"
+        },
+        en: {
+            lisans: "Bachelor's Degree",
+            lisans_bolum: "Industrial Design",
+            onlisans: "Associate Degree",
+            onlisans_bolum: "Computer Programming",
+            mezuniyet: "Graduation",
+            yuksek_lisans: "Master's Degree",
+            yuksek_lisans_bolum: "Industrial Design"
+        }
+    };
+
+    // 2. SİTE GENELİ (React İçerikleri - Senin Gönderdiğin Tüm Metinler)
+    const reactDictionary = [
+        // --- MENÜ ---
+        { tr: "Projeler", en: "Projects" },
+        { tr: "Hakkımda", en: "About" },
+        { tr: "İletişim", en: "Contact" },
+        { tr: "Ana Sayfa", en: "Home" },
+
+        // --- 1. KISIM: GİRİŞ EKRANI (HERO) ---
+        { tr: "Web siteme hoş geldiniz", en: "Welcome to my website" },
+        { tr: "Merhaba, Ben Alper", en: "Hello, I'm Alper" },
+        { tr: "Endüstriyel Tasarımcı & Ürün Geliştirici", en: "Industrial Designer & Product Developer" },
+        { tr: "Çalışmalarımı Görüntüle", en: "View My Work" },
+        // Uzun Açıklama
+        { 
+            partial: true, 
+            tr: "Form ve işlevi birleştiren yenilikçi ürünler oluşturma konusunda tutkuluyum", 
+            en: "I am passionate about creating innovative products that combine form and function. Explore my design projects, research studies, and journey in industrial design." 
+        },
+
+        // --- 2. KISIM: ÖNE ÇIKANLAR & PORTFOLYO GİRİŞ ---
+        { tr: "Öne Çıkan", en: "Featured" },
+        { tr: "Portfolyo", en: "Portfolio" },
+        // Uzun Açıklama (Öne Çıkan Altı)
+        { 
+            partial: true, 
+            tr: "Becerilerimi ve vizyonumu sergileyen tasarım araştırmalarım", 
+            en: "A collection of my design research, professional work, and innovative projects showcasing my skills and vision." 
+        },
+        // Uzun Açıklama (Portfolyo Altı)
+        { 
+            partial: true, 
+            tr: "Endüstriyel tasarım projelerimi, ürün tasarımlarımı ve çalışmalarımı sergileyen", 
+            en: "A comprehensive digital portfolio showcasing my industrial design projects, product designs, and works. Includes detailed project studies and design process documentation." 
+        },
+
+        // --- FİLTRELER VE ETİKETLER ---
+        { tr: "Tümü", en: "All" },
+        { tr: "İş", en: "Work" },
+        { tr: "Profesyonel", en: "Professional" },
+        { tr: "Akademik", en: "Academic" },
+        { tr: "Araştırma", en: "Research" },
+        { tr: "Portfolyo Tasarımı", en: "Portfolio Design" },
+        { tr: "Dijital Sunum", en: "Digital Presentation" },
+        { tr: "UI/UX", en: "UI/UX" }, // Değişmese de kalsın
+        { tr: "Mobil UI/UX", en: "Mobile UI/UX" },
+        { tr: "Etkileşim Tasarımı", en: "Interaction Design" },
+        { tr: "Kullanıcı Ara Yüzü", en: "User Interface" },
+        { tr: "Ürün Geliştirme", en: "Product Development" },
+        { tr: "Üretim", en: "Manufacturing" },
+        { tr: "Tasarım", en: "Design" },
+        { tr: "Tasarım Araştırması", en: "Design Research" },
+        { tr: "İnovasyon", en: "Innovation" },
+        { tr: "Prototipleme", en: "Prototyping" },
+        { tr: "Akademik Çalışma", en: "Academic Work" },
+        { tr: "Tez Projesi", en: "Thesis Project" },
+
+        // --- 3. KISIM: KARTLAR VE BUTONLAR ---
+        { tr: "Detayları Gör", en: "View Details" },
+        { tr: "Tıklayın", en: "Click" },
+        { tr: "Mobil Uygulama Tasarımı", en: "Mobile App Design" },
+        { tr: "Üretim Stajı", en: "Production Internship" },
+        { tr: "Ar-Ge Stajı", en: "R&D Internship" },
+        { tr: "Bitirme Tezi", en: "Graduation Thesis" },
+        
+        // Kart Açıklamaları (Uzun Metinler)
+        { 
+            partial: true, 
+            tr: "Sezgisel kullanıcı deneyimi, modern görsel tasarım", 
+            en: "A user-centered mobile application interface design project focused on intuitive user experience and modern visual design principles." 
+        },
+        { 
+            partial: true, 
+            tr: "Üretim ortamında uygulamalı endüstriyel tasarım", 
+            en: "Hands-on industrial design internship experience in a production environment. Collaborated with engineering teams on production-oriented design projects." 
+        },
+        { 
+            partial: true, 
+            tr: "Yenilikçi ürün tasarımı, malzeme keşfi", 
+            en: "R&D internship focused on innovative product design, material exploration, prototyping new concepts, and researching emerging design technologies." 
+        },
+        { 
+            partial: true, 
+            tr: "Endüstriyel tasarımda ileri konuları araştıran", 
+            en: "Comprehensive graduation thesis exploring advanced topics in industrial design, presenting original research on design methodology and user-centered principles." 
+        },
+
+        // --- 5. KISIM: HAKKIMDA ---
+        { tr: "Tasarım Projesi", en: "Design Projects" },
+        { tr: "Staj", en: "Internships" },
+        // Hakkımda Uzun Metin 1
+        { 
+            partial: true, 
+            tr: "Ürün geliştirme ve tasarım araştırması konusunda güçlü", 
+            en: "I am a passionate industrial designer with a strong background in product development and design research. My journey includes academic excellence, professional internships in production and R&D, and innovative design projects." 
+        },
+        // Hakkımda Uzun Metin 2
+        { 
+            partial: true, 
+            tr: "Kullanıcı merkezli tasarım, ürün geliştirme ve tasarım araştırması konularında uzmanım", 
+            en: "I am an expert in user-centered design, product development, and design research. Throughout my career, I have worked on various projects ranging from digital interfaces to physical products. I am dedicated to creating meaningful designs that improve people's lives through thoughtful problem-solving." 
+        },
+
+        // --- 7. KISIM: İLETİŞİM ---
+        { tr: "Hadi Bağlanalım", en: "Let's Connect" },
+        { 
+            partial: true,
+            tr: "Yeni tasarım projeleri, fırsatlar veya işbirlikleri", 
+            en: "I am always open to discussing new design projects, opportunities or collaborations. Contact me and let's create something great together!" 
+        }
+    ];
+
+    function applyLanguage(lang) {
+        localStorage.setItem('language', lang);
+
+        // A. TIMELINE ÇEVİRİSİ
+        const elements = document.querySelectorAll('[data-lang]');
+        elements.forEach(el => {
+            const key = el.getAttribute('data-lang');
+            if (translations[lang] && translations[lang][key]) {
+                el.innerText = translations[lang][key];
+            }
+        });
+
+        // B. REACT İÇERİK ÇEVİRİSİ (Hassas Tarama)
+        const allDom = document.getElementsByTagName("*");
+        for (let i = 0; i < allDom.length; i++) {
+            const elem = allDom[i];
+            
+            // Sadece yazı içeren kutulara bak
+            if (elem.children.length === 0 && elem.innerText && elem.innerText.trim().length > 0) {
+                 const text = elem.innerText.trim();
+                 
+                 reactDictionary.forEach(item => {
+                    // Zaten çevrildiyse atla
+                    if(elem.getAttribute('data-translated') === lang) return;
+
+                    if (!item.partial) {
+                        // Birebir Eşleşme (Başlıklar, Butonlar)
+                        if (text === item.tr || text === item.en) {
+                            elem.innerText = item[lang];
+                            elem.setAttribute('data-translated', lang);
+                        }
+                    } else {
+                        // Kısmi Eşleşme (Uzun Paragraflar)
+                        // İlk 20 karakteri tutuyorsa hepsini çevir
+                        if (text.includes(item.tr.substring(0, 20)) || text.includes(item.en.substring(0, 20))) {
+                            elem.innerText = item[lang];
+                            elem.setAttribute('data-translated', lang);
+                        }
+                    }
+                 });
+            }
+        }
+    }
+
+    function setLanguage(lang) {
+        applyLanguage(lang);
+    }
+
+    // --- BAŞLATMA (DONMA YAPMAZ) ---
+    window.onload = function() {
+        const savedLang = localStorage.getItem('language') || 'en';
+        
+        // 1. Hemen çalıştır
+        applyLanguage(savedLang);
+
+        // 2. React yüklenirken 5 saniye boyunca kontrol et
+        let counter = 0;
+        const interval = setInterval(() => {
+            const currentLang = localStorage.getItem('language') || 'en';
+            applyLanguage(currentLang);
+            counter++;
+            if(counter > 10) clearInterval(interval);
+        }, 500);
+
+        // 3. Tıklama olursa (filtre değişimi vb.) tekrar kontrol et
+        document.body.addEventListener('click', () => {
+            setTimeout(() => {
+                const currentLang = localStorage.getItem('language') || 'en';
+                applyLanguage(currentLang);
+            }, 300);
+        });
+    };
 </script>
     </body>
 </html>
