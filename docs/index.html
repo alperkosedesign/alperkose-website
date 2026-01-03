@@ -35,14 +35,54 @@
     <div id="root"></div>
     <style>
 <style>
+  /* MOBİL CİHAZ AYARLARI (TELEFON) */
   @media (max-width: 768px) {
-    .career-timeline { flex-direction: column !important; align-items: flex-start !important; padding-left: 30px !important; }
-    .timeline-line { width: 2px !important; height: 100% !important; top: 0 !important; left: 38px !important; background: linear-gradient(180deg, transparent, rgba(255,255,255,0.2), transparent) !important; }
-    .timeline-item { width: 100% !important; text-align: left !important; margin-bottom: 40px !important; padding-left: 40px !important; }
-    .timeline-item .dot { position: absolute !important; left: 0 !important; top: 5px !important; margin: 0 !important; }
+    /* Ana kutu boşluğunu azalt */
+    .career-timeline-wrapper {
+      padding: 40px 0 !important;
+    }
+    
+    /* Öğeleri alt alta sırala */
+    .career-timeline { 
+      flex-direction: column !important; 
+      align-items: flex-start !important; 
+      padding-left: 20px !important; /* Soldan boşluğu azalttım */
+    }
+    
+    /* Çizgiyi dikey hale getir */
+    .timeline-line { 
+      width: 2px !important; 
+      height: 100% !important; 
+      top: 0 !important; 
+      left: 28px !important; /* Çizgi konumu */
+      background: linear-gradient(180deg, transparent, rgba(255,255,255,0.2), transparent) !important; 
+    }
+    
+    /* Her bir yıl kutusu */
+    .timeline-item { 
+      width: 100% !important; 
+      text-align: left !important; 
+      margin-bottom: 30px !important; /* Alt boşluğu azalttım */
+      padding-left: 35px !important; /* Yazıların çizgiye uzaklığı */
+    }
+    
+    /* Nokta konumu */
+    .timeline-item .dot { 
+      position: absolute !important; 
+      left: 0 !important; 
+      top: 4px !important; 
+      margin: 0 !important; 
+    }
+
+    /* Mobilde yazı boyutlarını küçültüyoruz */
+    .year-text { font-size: 1.1rem !important; margin-bottom: 2px !important; }
+    .desc-text { font-size: 0.95rem !important; margin-top: 2px !important; }
+    .small-text { font-size: 0.8rem !important; }
   }
+
+  /* Hover efekti (Bilgisayar için) */
   .timeline-item:hover { transform: translateY(-5px); transition: transform 0.3s ease; }
-  .timeline-item:hover .year { color: #f97316 !important; }
+  .timeline-item:hover .year-text { color: #f97316 !important; }
 </style>
 
 <div class="career-timeline-wrapper" style="background-color: #111827; width: 100%; display: flex; justify-content: center; padding: 80px 0; margin: 0; color: white;">
@@ -52,38 +92,37 @@
     <div class="timeline-line" style="position: absolute; top: 40px; left: 40px; right: 40px; height: 2px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); z-index: 0;"></div>
     
     <div class="timeline-item" style="position: relative; text-align: center; width: 22%; z-index: 1;">
-      <span class="year" style="font-size: 1.4rem; font-weight: 700; color: #f8fafc; display: block; margin-bottom: 15px;">2020</span>
+      <span class="year-text" style="font-size: 1.4rem; font-weight: 700; color: #f8fafc; display: block; margin-bottom: 15px;">2020</span>
       <span class="dot" style="display: block; width: 16px; height: 16px; background-color: #f97316; border-radius: 50%; margin: 0 auto 15px auto; border: 3px solid #111827; box-shadow: 0 0 10px rgba(249, 115, 22, 0.4); position: relative; z-index: 2;"></span>
-      <p style="font-size: 1rem; color: #cbd5e1; line-height: 1.5; margin-top: 10px; font-weight: 500;">
+      <p class="desc-text" style="font-size: 1rem; color: #cbd5e1; line-height: 1.4; margin-top: 10px; font-weight: 500;">
         Lisans<br>
-        <small style="display: block; margin-top: 4px; font-size: 0.85rem; color: #94a3b8;">Endüstriyel Tasarım</small>
+        <small class="small-text" style="display: block; margin-top: 4px; font-size: 0.85rem; color: #94a3b8;">Endüstriyel Tasarım</small>
       </p>
     </div>
 
     <div class="timeline-item" style="position: relative; text-align: center; width: 22%; z-index: 1;">
-      <span class="year" style="font-size: 1.4rem; font-weight: 700; color: #f8fafc; display: block; margin-bottom: 15px;">2022</span>
+      <span class="year-text" style="font-size: 1.4rem; font-weight: 700; color: #f8fafc; display: block; margin-bottom: 15px;">2022</span>
       <span class="dot" style="display: block; width: 16px; height: 16px; background-color: #f97316; border-radius: 50%; margin: 0 auto 15px auto; border: 3px solid #111827; box-shadow: 0 0 10px rgba(249, 115, 22, 0.4); position: relative; z-index: 2;"></span>
-      <p style="font-size: 1rem; color: #cbd5e1; line-height: 1.5; margin-top: 10px; font-weight: 500;">
+      <p class="desc-text" style="font-size: 1rem; color: #cbd5e1; line-height: 1.4; margin-top: 10px; font-weight: 500;">
         Ön Lisans<br>
-        <small style="display: block; margin-top: 4px; font-size: 0.85rem; color: #94a3b8;">Bilgisayar Programcılığı</small>
+        <small class="small-text" style="display: block; margin-top: 4px; font-size: 0.85rem; color: #94a3b8;">Bilgisayar Programcılığı</small>
       </p>
     </div>
 
     <div class="timeline-item" style="position: relative; text-align: center; width: 22%; z-index: 1;">
-      <span class="year" style="font-size: 1.4rem; font-weight: 700; color: #f8fafc; display: block; margin-bottom: 15px;">2025</span>
+      <span class="year-text" style="font-size: 1.4rem; font-weight: 700; color: #f8fafc; display: block; margin-bottom: 15px;">2025</span>
       <span class="dot" style="display: block; width: 16px; height: 16px; background-color: #f97316; border-radius: 50%; margin: 0 auto 15px auto; border: 3px solid #111827; box-shadow: 0 0 10px rgba(249, 115, 22, 0.4); position: relative; z-index: 2;"></span>
-      <p style="font-size: 1rem; color: #cbd5e1; line-height: 1.5; margin-top: 10px; font-weight: 500;">
-        Mezuniyet 🎓<br>
-        <small style="display: block; margin-top: 4px; font-size: 0.85rem; color: #94a3b8;">Başarı Belgesi</small>
+      <p class="desc-text" style="font-size: 1rem; color: #cbd5e1; line-height: 1.4; margin-top: 10px; font-weight: 500;">
+        Mezuniyet 🎓
       </p>
     </div>
 
     <div class="timeline-item" style="position: relative; text-align: center; width: 22%; z-index: 1;">
-      <span class="year" style="font-size: 1.4rem; font-weight: 700; color: #f8fafc; display: block; margin-bottom: 15px;">2026</span>
+      <span class="year-text" style="font-size: 1.4rem; font-weight: 700; color: #f8fafc; display: block; margin-bottom: 15px;">2026</span>
       <span class="dot" style="display: block; width: 16px; height: 16px; background-color: #f97316; border-radius: 50%; margin: 0 auto 15px auto; border: 3px solid #111827; box-shadow: 0 0 10px rgba(249, 115, 22, 0.4); position: relative; z-index: 2;"></span>
-      <p style="font-size: 1rem; color: #cbd5e1; line-height: 1.5; margin-top: 10px; font-weight: 500;">
+      <p class="desc-text" style="font-size: 1rem; color: #cbd5e1; line-height: 1.4; margin-top: 10px; font-weight: 500;">
         Yüksek Lisans<br>
-        <small style="display: block; margin-top: 4px; font-size: 0.85rem; color: #94a3b8;">Endüstriyel Tasarım</small>
+        <small class="small-text" style="display: block; margin-top: 4px; font-size: 0.85rem; color: #94a3b8;">Endüstriyel Tasarım</small>
       </p>
     </div>
 
