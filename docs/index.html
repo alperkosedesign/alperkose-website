@@ -34,13 +34,14 @@
   <body>
     <div id="root"></div>
     <style>
+  <style>
   .career-timeline {
     position: relative;
     display: flex;
     justify-content: space-between;
     /* Sitenin koyu laciverdimsi arka plan rengi */
     background-color: #111827; 
-    color: #f3f4f6; /* Yazıları net beyaz/gri yaptık */
+    color: #f3f4f6;
     margin: 0;
     padding: 80px 10%;
     font-family: inherit;
@@ -54,7 +55,6 @@
     left: 10%;
     right: 10%;
     height: 2px;
-    /* Çizgi de uyumlu olsun diye beyazımsı */
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
     z-index: 0;
     transform: translateY(-50%);
@@ -63,7 +63,7 @@
   .timeline-item {
     position: relative;
     text-align: center;
-    width: 18%;
+    width: 20%; /* 4 madde olduğu için genişliği biraz artırdık */
     z-index: 1;
     transition: all 0.4s ease;
     cursor: default;
@@ -146,12 +146,6 @@
   
   <div class="timeline-item">
     <span class="year">2020</span>
-    <span class="dot"></span>
-    <p>İngilizce Hazırlık</p>
-  </div>
-
-  <div class="timeline-item">
-    <span class="year">2021</span>
     <span class="dot"></span>
     <p>Lisans<br><small style="font-weight:400; opacity:0.7">Endüstriyel Tasarım</small></p>
   </div>
