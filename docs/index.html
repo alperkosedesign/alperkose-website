@@ -128,8 +128,8 @@ body.loaded .career-timeline-wrapper { opacity: 1; }
       <span class="year-text" style="font-size: 1.4rem; font-weight: 700; color: #f8fafc; display: block; margin-bottom: 15px;">2022</span>
       <span class="dot" style="display: block; width: 16px; height: 16px; background-color: #f97316; border-radius: 50%; margin: 0 auto 15px auto; border: 3px solid #111827; box-shadow: 0 0 10px rgba(249, 115, 22, 0.4); position: relative; z-index: 2;"></span>
     <p class="desc-text" style="font-size: 1rem; color: #cbd5e1; line-height: 1.4; margin-top: 10px; font-weight: 500;">
-        <span data-lang="önlisans">Ön Lisans</span><br>
-        <small data-lang="önlisans_bolum" class="small-text" style="display: block; margin-top: 4px; font-size: 0.85rem; color: #94a3b8;">Bilgisayar Programcılığı</small>
+        <span data-lang="onlisans">Ön Lisans</span><br>
+        <small data-lang="onlisans_bolum" class="small-text" style="display: block; margin-top: 4px; font-size: 0.85rem; color: #94a3b8;">Bilgisayar Programcılığı</small>
       </p>
     </div>
 
@@ -164,39 +164,41 @@ body.loaded .career-timeline-wrapper { opacity: 1; }
 </div>
 
 <script>
+    // 1. KISIM: Senin eklediğin Timeline (HTML içinde olanlar)
     const translations = {
         tr: {
-            main_title: "Akademik & Profesyonel Portfolyo",
-            description: "Mobil uygulamalar, staj çalışmaları ve Ar-Ge projelerimi içeren kapsamlı portfolyomu keşfedin.",
             lisans: "Lisans",
             lisans_bolum: "Endüstriyel Tasarım",
-            önlisans: "Ön Lisans",
-            önlisans_bolum: "Bilgisayar Programcılığı",
+            onlisans: "Ön Lisans",
+            onlisans_bolum: "Bilgisayar Programcılığı",
             mezuniyet: "Mezuniyet",
             yuksek_lisans: "Yüksek Lisans",
-            yuksek_lisans_bolum: "Endüstriyel Tasarım",
-            projects: "Projeler",
-            about: "Hakkımda",
-            contact: "İletişim"
+            yuksek_lisans_bolum: "Endüstriyel Tasarım"
         },
         en: {
-            main_title: "Academic & Professional Portfolio",
-            description: "Explore my comprehensive portfolio featuring innovative projects including mobile applications, internship work, and R&D research.",
             lisans: "Bachelor's Degree",
             lisans_bolum: "Industrial Design",
-            önlisans: "Associate Degree",
-            önlisans_bolum: "Computer Programming",
+            onlisans: "Associate Degree",
+            onlisans_bolum: "Computer Programming",
             mezuniyet: "Graduation",
             yuksek_lisans: "Master's Degree",
-            yuksek_lisans_bolum: "Industrial Design",
-            projects: "Projects",
-            about: "About Me",
-            contact: "Contact"
+            yuksek_lisans_bolum: "Industrial Design"
         }
     };
 
-    function setLanguage(lang) {
+    // 2. KISIM: Üst Menü (React tarafından sonradan eklenenler)
+    // Buradaki kelimeler sitede gördüğünle BİREBİR aynı olmalı (Büyük/küçük harf dahil)
+    const reactDictionary = [
+        { tr: "Projeler", en: "Projects" },
+        { tr: "Hakkımda", en: "About" }, 
+        { tr: "İletişim", en: "Contact" },
+        { tr: "Ana Sayfa", en: "Home" } 
+    ];
+
+    function applyLanguage(lang) {
         localStorage.setItem('language', lang);
+
+        // A. Timeline Çevirisi (data-lang etiketiyle)
         const elements = document.querySelectorAll('[data-lang]');
         elements.forEach(el => {
             const key = el.getAttribute('data-lang');
@@ -204,11 +206,42 @@ body.loaded .career-timeline-wrapper { opacity: 1; }
                 el.innerText = translations[lang][key];
             }
         });
+
+        // B. Menü Çevirisi (Metin Arama yöntemiyle)
+        const allDom = document.getElementsByTagName("*");
+        for (let i = 0; i < allDom.length; i++) {
+            const elem = allDom[i];
+            // Sadece doğrudan yazı içeren kutulara bak
+            if (elem.children.length === 0 && elem.innerText) {
+                 reactDictionary.forEach(item => {
+                    if (elem.innerText.trim() === item.tr || elem.innerText.trim() === item.en) {
+                        elem.innerText = item[lang];
+                    }
+                 });
+            }
+        }
     }
 
+    // Butona basınca çalışacak fonksiyon
+    function setLanguage(lang) {
+        applyLanguage(lang);
+    }
+
+    // Sayfa Yüklendiğinde
     window.onload = function() {
         const savedLang = localStorage.getItem('language') || 'en';
-        setLanguage(savedLang);
+        
+        // 1. Hemen çevirmeyi dene
+        applyLanguage(savedLang);
+
+        // 2. React menüyü geç yüklerse diye 1.5 saniye boyunca kontrol et
+        let attempts = 0;
+        const interval = setInterval(() => {
+             const currentLang = localStorage.getItem('language') || 'en';
+             applyLanguage(currentLang);
+             attempts++;
+             if (attempts > 5) clearInterval(interval); // 5 kere denedikten sonra dur
+        }, 300); 
     };
 </script>
     </body>
