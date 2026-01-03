@@ -22,7 +22,7 @@
     <script type="module" crossorigin src="/alperkose-website/assets/index-d_xqxAZt.js"></script>
     <link rel="stylesheet" crossorigin href="/alperkose-website/assets/index-CC7C7e7Q.css">
 
-    <!-- BİZİM EKLEDİĞİMİZ STİLLER -->
+    <!-- EK STİLLER (Timeline ve Buton) -->
     <style>
       .career-timeline-wrapper { opacity: 0; transition: opacity 0.5s ease; }
       body.loaded .career-timeline-wrapper { opacity: 1; }
@@ -43,17 +43,17 @@
   </head>
   <body>
     
-    <!-- REACT UYGULAMASI -->
+    <!-- REACT APP -->
     <div id="root"></div>
     
 
-<!-- TIMELINE (ZAMAN ÇİZELGESİ) - SABİT HTML -->
+<!-- TIMELINE HTML (Sabit Kısım) -->
 <div class="career-timeline-wrapper" style="background-color: #111827; width: 100%; display: flex; justify-content: center; padding: 80px 0; margin: 0; color: white;">
   <div class="career-timeline" style="position: relative; display: flex; justify-content: space-between; width: 100%; max-width: 1100px; padding: 0 20px; box-sizing: border-box;">
     
     <div class="timeline-line" style="position: absolute; top: 40px; left: 40px; right: 40px; height: 2px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); z-index: 0;"></div>
     
-    <!-- 2020 LİSANS -->
+    <!-- 2020 -->
     <div class="timeline-item" style="position: relative; text-align: center; width: 22%; z-index: 1;">
       <span class="year-text" style="font-size: 1.4rem; font-weight: 700; color: #f8fafc; display: block; margin-bottom: 15px;">2020</span>
       <span class="dot" style="display: block; width: 16px; height: 16px; background-color: #f97316; border-radius: 50%; margin: 0 auto 15px auto; border: 3px solid #111827; box-shadow: 0 0 10px rgba(249, 115, 22, 0.4); position: relative; z-index: 2;"></span>
@@ -63,7 +63,7 @@
       </p>
     </div>
 
-    <!-- 2022 ÖN LİSANS -->
+    <!-- 2022 -->
     <div class="timeline-item" style="position: relative; text-align: center; width: 22%; z-index: 1;">
       <span class="year-text" style="font-size: 1.4rem; font-weight: 700; color: #f8fafc; display: block; margin-bottom: 15px;">2022</span>
       <span class="dot" style="display: block; width: 16px; height: 16px; background-color: #f97316; border-radius: 50%; margin: 0 auto 15px auto; border: 3px solid #111827; box-shadow: 0 0 10px rgba(249, 115, 22, 0.4); position: relative; z-index: 2;"></span>
@@ -73,7 +73,7 @@
       </p>
     </div>
 
-    <!-- 2025 MEZUNİYET -->
+    <!-- 2025 -->
     <div class="timeline-item" style="position: relative; text-align: center; width: 22%; z-index: 1;">
       <span class="year-text" style="font-size: 1.4rem; font-weight: 700; color: #f8fafc; display: block; margin-bottom: 15px;">2025</span>
       <span class="dot" style="display: block; width: 16px; height: 16px; background-color: #f97316; border-radius: 50%; margin: 0 auto 15px auto; border: 3px solid #111827; box-shadow: 0 0 10px rgba(249, 115, 22, 0.4); position: relative; z-index: 2;"></span>
@@ -82,7 +82,7 @@
       </p>
     </div>
 
-    <!-- 2026 YÜKSEK LİSANS -->
+    <!-- 2026 -->
     <div class="timeline-item" style="position: relative; text-align: center; width: 22%; z-index: 1;">
       <span class="year-text" style="font-size: 1.4rem; font-weight: 700; color: #f8fafc; display: block; margin-bottom: 15px;">2026</span>
       <span class="dot" style="display: block; width: 16px; height: 16px; background-color: #f97316; border-radius: 50%; margin: 0 auto 15px auto; border: 3px solid #111827; box-shadow: 0 0 10px rgba(249, 115, 22, 0.4); position: relative; z-index: 2;"></span>
@@ -107,9 +107,9 @@
     <button onclick="setLanguage('en')" style="border: none; background: transparent; cursor: pointer; font-weight: bold; padding: 5px;">🇬🇧 EN</button>
 </div>
 
-<!-- ÇEVİRİ SİSTEMİ (HATA KORUMALI) -->
+<!-- GELİŞMİŞ ÇEVİRİ KODU (AKILLI TARAMA + TAM METİN) -->
 <script>
-    // 1. TIMELINE İÇİN (Sabit HTML)
+    // 1. TIMELINE ÇEVİRİLERİ (SABİT HTML)
     const translations = {
         tr: {
             lisans: "Lisans",
@@ -131,7 +131,8 @@
         }
     };
 
-    // 2. SİTE İÇERİĞİ İÇİN SÖZLÜK (Görsellerdeki Tüm Metinler)
+    // 2. SİTE İÇERİĞİ SÖZLÜĞÜ (HER ŞEY DAHİL)
+    // Partial: true olanlar cümlenin bir kısmını yakalayıp tamamını çevirir.
     const reactDictionary = [
         // --- MENÜ ---
         { tr: "Projeler", en: "Projects" },
@@ -144,21 +145,43 @@
         { tr: "Merhaba, Ben Alper", en: "Hello, I'm Alper" },
         { tr: "Endüstriyel Tasarımcı & Ürün Geliştirici", en: "Industrial Designer & Product Developer" },
         { tr: "Çalışmalarımı Görüntüle", en: "View My Work" },
-        
-        // --- PORTFOLYO & ETİKETLER (KARTLAR) ---
+        // Hero Uzun Metin
+        { 
+            partial: true, 
+            tr: "Form ve işlevi birleştiren", 
+            en: "I am passionate about creating innovative products that combine form and function. Explore my design projects, research studies, and journey in industrial design." 
+        },
+
+        // --- PORTFOLYO & FİLTRELER ---
+        { tr: "Öne Çıkan", en: "Featured" },
         { tr: "Portfolyo", en: "Portfolio" },
+        // Portfolyo Altı Açıklamaları
+        { 
+            partial: true, 
+            tr: "Becerilerimi ve vizyonumu sergileyen", 
+            en: "A collection of my design research, professional work, and innovative projects showcasing my skills and vision." 
+        },
+        { 
+            partial: true, 
+            tr: "Endüstriyel tasarım projelerimi", 
+            en: "A comprehensive digital portfolio showcasing my industrial design projects, product designs, and works. Includes detailed project studies and design process documentation." 
+        },
+        
+        // Filtreler ve Etiketler
         { tr: "Tümü", en: "All" },
         { tr: "İş", en: "Work" },
         { tr: "Profesyonel", en: "Professional" },
         { tr: "Akademik", en: "Academic" },
         { tr: "Araştırma", en: "Research" },
+
+        // --- KARTLAR VE DETAYLAR ---
         { tr: "Detayları Gör", en: "View Details" },
         { tr: "Tıklayın", en: "Click" },
         { tr: "Mobil Uygulama Tasarımı", en: "Mobile App Design" },
         { tr: "Üretim Stajı", en: "Production Internship" },
         { tr: "Ar-Ge Stajı", en: "R&D Internship" },
         { tr: "Bitirme Tezi", en: "Graduation Thesis" },
-        // Kart İçindeki Teknik Terimler
+        // Teknik Terimler
         { tr: "Mobil UI/UX", en: "Mobile UI/UX" },
         { tr: "Etkileşim Tasarımı", en: "Interaction Design" },
         { tr: "Kullanıcı Ara Yüzü", en: "User Interface" },
@@ -173,75 +196,71 @@
         { tr: "Portfolyo Tasarımı", en: "Portfolio Design" },
         { tr: "Dijital Sunum", en: "Digital Presentation" },
         { tr: "UI/UX", en: "UI/UX" },
-        
-        // --- HAKKIMDA RAKAMLARI ---
+
+        // --- KART AÇIKLAMALARI (Uzun) ---
+        { 
+            partial: true, 
+            tr: "Sezgisel kullanıcı deneyimi", 
+            en: "A user-centered mobile application interface design project focused on intuitive user experience and modern visual design principles." 
+        },
+        { 
+            partial: true, 
+            tr: "Üretim ortamında uygulamalı", 
+            en: "Hands-on industrial design internship experience in a production environment. Collaborated with engineering teams on production-oriented design projects." 
+        },
+        { 
+            partial: true, 
+            tr: "Yenilikçi ürün tasarımı", 
+            en: "R&D internship focused on innovative product design, material exploration, prototyping new concepts, and researching emerging design technologies." 
+        },
+        { 
+            partial: true, 
+            tr: "Endüstriyel tasarımda ileri", 
+            en: "Comprehensive graduation thesis exploring advanced topics in industrial design, presenting original research on design methodology and user-centered principles." 
+        },
+
+        // --- HAKKIMDA BÖLÜMÜ ---
         { tr: "Tasarım Projesi", en: "Design Projects" },
         { tr: "Staj", en: "Internships" },
         { tr: "20+", en: "20+" },
         { tr: "2", en: "2" },
+        // Hakkımda Uzun Yazıları
+        { 
+            partial: true, 
+            tr: "Ürün geliştirme ve tasarım araştırması", 
+            en: "I am a passionate industrial designer with a strong background in product development and design research. My journey includes academic excellence, professional internships in production and R&D, and innovative design projects." 
+        },
+        { 
+            partial: true, 
+            tr: "Kullanıcı merkezli tasarım", 
+            en: "I am an expert in user-centered design, product development, and design research. Throughout my career, I have worked on various projects ranging from digital interfaces to physical products. I am dedicated to creating meaningful designs that improve people's lives through thoughtful problem-solving." 
+        },
 
-        // --- İLETİŞİM ---
-        { tr: "Hadi Bağlanalım", en: "Let's Connect" },
+        // --- İLETİŞİM BÖLÜMÜ (ÖZEL İSTEK) ---
         { 
-            tr: "Yeni tasarım projeleri, fırsatlar veya işbirlikleri hakkında konuşmaya her zaman açığım.", 
-            en: "I am always open to discussing new design projects, opportunities or collaborations." 
-        },
-        
-        // --- UZUN PARAGRAFLAR (Kısmi Eşleşme) ---
-        { 
-            partial: true, 
-            tr: "Form ve işlevi birleştiren, yenilikçi ürünler yaratma konusunda tutkuluyum. Endüstriyel tasarım yolculuğumu, araştırma çalışmalarımı ve tasarım projelerimi keşfedin.", 
-            en: "I am passionate about creating innovative products that combine form and function" 
+            partial: true,
+            tr: "Hadi Bağlanalım", 
+            en: "Let's Connect" 
         },
         { 
-            partial: true, 
-            tr: "Endüstriyel tasarım projelerimi, ürün tasarımlarımı ve çalışmalarımı sergileyen kapsamlı bir dijital portfolyo. Detaylı proje çalışmaları ve tasarım süreçlerini içerir.", 
-            en: "A comprehensive digital portfolio showcasing my industrial design projects" 
-        },
-        { 
-            partial: true, 
-            tr: "Ben Alper Köse. Tasarım ve yazılım ile ilgileniyorum. Ürün geliştirme ve tasarım araştırması konusunda güçlü bir geçmişe sahip tutkulu bir endüstriyel tasarımcıyım.", 
-            en: "I am Alper Kose" 
-        },
-        { 
-            partial: true, 
-            tr: "Kullanıcı merkezli tasarım, ürün geliştirme ve tasarım araştırması konularında uzmanım. Kariyerim boyunca dijital arayüzlerden fiziksel ürünlere kadar çeşitli projelerde yer aldım.", 
-            en: "I am an expert in user-centered design" 
-        },
-        { 
-            partial: true, 
-            tr: "Becerilerimi ve vizyonumu sergileyen tasarım araştırmalarım, profesyonel çalışmalarım", 
-            en: "A collection of my design research, professional work" 
-        },
-        { 
-            partial: true, 
-            tr: "Sezgisel kullanıcı deneyimi, modern görsel tasarım ilkeleri", 
-            en: "A user-centered mobile application interface design project focused on intuitive user experience" 
-        },
-        { 
-            partial: true, 
-            tr: "Üretim ortamında uygulamalı endüstriyel tasarım stajı deneyimi", 
-            en: "Hands-on industrial design internship experience in a production environment" 
-        },
-        { 
-            partial: true, 
-            tr: "Yenilikçi ürün tasarımı, malzeme keşfi, yeni konseptlerin prototiplenmesi", 
-            en: "R&D internship focused on innovative product design, material exploration" 
-        },
-        { 
-            partial: true, 
-            tr: "Endüstriyel tasarımda ileri konuları araştıran, tasarım metodolojisi", 
-            en: "Comprehensive graduation thesis exploring advanced topics in industrial design" 
+            partial: true,
+            tr: "Yeni tasarım projeleri", 
+            en: "I am always open to discussing new design projects, opportunities or collaborations. Contact me and let's create something great together!" 
         }
     ];
 
-    // GÜVENLİ DEPOLAMA FONKSİYONU
+    // GÜVENLİ DEPOLAMA (Hata Vermez)
     function safeGetItem(key) {
         try { return localStorage.getItem(key); } catch(e) { return 'en'; }
     }
     
     function safeSetItem(key, val) {
         try { localStorage.setItem(key, val); } catch(e) { /* ignore */ }
+    }
+
+    // NORMALİZASYON (Boşlukları Temizleme)
+    function normalize(str) {
+        return str.replace(/\s+/g, ' ').trim();
     }
 
     function applyLanguage(lang) {
@@ -256,24 +275,26 @@
             }
         });
 
-        // B. İÇERİK ÇEVİRİSİ
+        // B. İÇERİK ÇEVİRİSİ (Normalize Edilmiş)
         const allDom = document.getElementsByTagName("*");
         for (let i = 0; i < allDom.length; i++) {
             const elem = allDom[i];
             
+            // Sadece yazı içeren kutulara bak
             if (elem.children.length === 0 && elem.innerText && elem.innerText.trim().length > 0) {
-                 const text = elem.innerText.trim();
+                 const text = normalize(elem.innerText); // Yazıyı temizle
                  
                  reactDictionary.forEach(item => {
                     if(elem.getAttribute('data-translated') === lang) return;
 
                     if (!item.partial) {
-                        if (text === item.tr || text === item.en) {
+                        // Tam Eşleşme
+                        if (text === normalize(item.tr) || text === normalize(item.en)) {
                             elem.innerText = item[lang];
                             elem.setAttribute('data-translated', lang);
                         }
                     } else {
-                        // Kısmi eşleşme (İlk 15 karakter tutuyorsa çevir)
+                        // Kısmi Eşleşme (İlk 15-20 karakter)
                         if (text.includes(item.tr.substring(0, 15)) || text.includes(item.en.substring(0, 15))) {
                             elem.innerText = item[lang];
                             elem.setAttribute('data-translated', lang);
@@ -294,14 +315,16 @@
         
         applyLanguage(savedLang);
 
+        // React yüklenirken 5 saniye boyunca kontrol et
         let counter = 0;
         const interval = setInterval(() => {
             const currentLang = safeGetItem('language') || 'en';
             applyLanguage(currentLang);
             counter++;
-            if(counter > 15) clearInterval(interval); // Süreyi biraz uzattım
+            if(counter > 15) clearInterval(interval);
         }, 500);
 
+        // Tıklama, kaydırma vb. durumlarda tekrar kontrol et
         document.body.addEventListener('click', () => {
             setTimeout(() => {
                 const currentLang = safeGetItem('language') || 'en';
