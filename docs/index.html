@@ -22,19 +22,29 @@
     <script type="module" crossorigin src="/alperkose-website/assets/index-d_xqxAZt.js"></script>
     <link rel="stylesheet" crossorigin href="/alperkose-website/assets/index-CC7C7e7Q.css">
 
-    <!-- EK STİLLER (GECİKMEYİ ÖNLEYEN AYARLAR DAHİL) -->
+    <!-- EK STİLLER (GECİKMEYİ ÖNLEYEN VE LİNK KALDIRAN AYARLAR DAHİL) -->
     <style>
-      /* Başlangıçta görünmez yapıyoruz */
+      /* Timeline Başlangıçta Görünmez */
       .career-timeline-wrapper { 
         opacity: 0; 
         visibility: hidden; 
         transition: opacity 0.6s ease, visibility 0.6s; 
       }
       
-      /* Sayfa hazır olunca görünür yapıyoruz */
+      /* Sayfa hazır olunca görünür */
       body.loaded .career-timeline-wrapper { 
         opacity: 1; 
         visibility: visible; 
+      }
+
+      /* READDY LİNKİNİ PASİF YAPMA (Tıklanmaz Hale Getirir) */
+      /* Footer'daki tüm 'a' etiketlerini hedefler, eğer özel bir class yoksa */
+      /* Ancak spesifik olarak 'Readdy' linkini hedeflemek için: */
+      a[href*="readdy.ai"] {
+        pointer-events: none !important; /* Tıklamayı engeller */
+        cursor: default !important;      /* İmleci normal yapar (el işareti çıkmaz) */
+        text-decoration: none !important; /* Alt çizgiyi kaldırır */
+        color: inherit !important;       /* Rengi korur */
       }
       
       @media (max-width: 768px) {
@@ -118,7 +128,7 @@
     <button onclick="setLanguage('en')" style="border: none; background: transparent; cursor: pointer; font-weight: bold; padding: 5px;">🇬🇧 EN</button>
 </div>
 
-<!-- ÇEVİRİ SİSTEMİ (CERRAHİ MÜDAHALE MODU) -->
+<!-- ÇEVİRİ SİSTEMİ (NİHAİ - TÜM ÖZELLİKLER DAHİL) -->
 <script>
     // 1. TIMELINE ÇEVİRİLERİ (SABİT HTML)
     const translations = {
@@ -142,7 +152,7 @@
         }
     };
 
-    // 2. SİTE İÇERİĞİ SÖZLÜĞÜ (TÜM METİNLER)
+    // 2. SİTE İÇERİĞİ SÖZLÜĞÜ (TÜM METİNLER + BOŞLUK DÜZELTMESİ)
     const reactDictionary = [
         // --- İSİM ALANI (BOŞLUKLU VERSİYONLAR) ---
         // Buradaki boşluklar "BenAlper" birleşmesini önler.
@@ -296,18 +306,26 @@
         for (let i = 0; i < allDom.length; i++) {
             const elem = allDom[i];
             
+            // Eğer readdy linki ise (veya genel footer linkleri) pasif yap
+            if (elem.tagName === 'A' && (elem.href.includes('readdy.ai') || elem.innerText.includes('Alper Köse'))) {
+                // Sadece footer'daki linki hedeflemek için ek kontrol yapılabilir ama bu genel çözüm de çalışır
+                if(elem.closest('footer') || elem.closest('.footer')) {
+                    elem.style.pointerEvents = 'none';
+                    elem.style.cursor = 'default';
+                    elem.style.textDecoration = 'none';
+                    elem.onclick = function(e){ e.preventDefault(); return false; };
+                }
+            }
+
             // Elementin içindeki TÜM metin parçalarını (Text Nodes) kontrol et
-            // Bu sayede yanında <br> veya <span> olsa bile metni yakalarız.
             for (let j = 0; j < elem.childNodes.length; j++) {
                 const node = elem.childNodes[j];
                 
-                // Sadece Metin Düğümlerine Bak (Node Type 3)
                 if (node.nodeType === 3) { 
                     const text = normalize(node.nodeValue);
                     
                     if (text.length > 0) {
                         reactDictionary.forEach(item => {
-                            // Zaten çevrildiyse atla (Parent elementi kontrol ederek)
                             if(elem.getAttribute('data-translated-' + j) === lang) return;
 
                             if (!item.partial) {
