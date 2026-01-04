@@ -22,10 +22,20 @@
     <script type="module" crossorigin src="/alperkose-website/assets/index-d_xqxAZt.js"></script>
     <link rel="stylesheet" crossorigin href="/alperkose-website/assets/index-CC7C7e7Q.css">
 
-    <!-- EK STİLLER (Timeline ve Buton) -->
+    <!-- EK STİLLER (GECİKMEYİ ÖNLEYEN AYARLAR DAHİL) -->
     <style>
-      .career-timeline-wrapper { opacity: 0; transition: opacity 0.5s ease; }
-      body.loaded .career-timeline-wrapper { opacity: 1; }
+      /* Başlangıçta hem şeffaf hem de GÖRÜNMEZ yapıyoruz (Bozuk görüntü gelmesin diye) */
+      .career-timeline-wrapper { 
+        opacity: 0; 
+        visibility: hidden; 
+        transition: opacity 0.6s ease, visibility 0.6s; 
+      }
+      
+      /* Sayfa hazır olduğunda (loaded sınıfı eklenince) göster */
+      body.loaded .career-timeline-wrapper { 
+        opacity: 1; 
+        visibility: visible; 
+      }
       
       @media (max-width: 768px) {
         .career-timeline-wrapper { padding: 40px 0 !important; }
@@ -96,6 +106,7 @@
 
 <script>
   window.addEventListener('load', function() {
+    // Sayfa tamamen yüklendiğinde 'loaded' sınıfını ekle
     document.body.classList.add('loaded');
   });
 </script>
@@ -107,7 +118,7 @@
     <button onclick="setLanguage('en')" style="border: none; background: transparent; cursor: pointer; font-weight: bold; padding: 5px;">🇬🇧 EN</button>
 </div>
 
-<!-- SİHİRLİ ÇEVİRİ KODU (TAM CÜMLELERLE) -->
+<!-- ÇEVİRİ SİSTEMİ (HATA KORUMALI + MERHABA ALPER DÜZELTMESİ) -->
 <script>
     // 1. TIMELINE ÇEVİRİLERİ (SABİT HTML)
     const translations = {
@@ -141,10 +152,10 @@
         
         // --- GİRİŞ (HERO) ---
         { tr: "Web siteme hoş geldiniz", en: "Welcome to my website" },
-        { tr: "Merhaba, Ben Alper", en: "Hello, I'm Alper" },
+        { tr: "Merhaba, Ben Alper", en: "Hello, I'm Alper", partial: true }, // Partial: true ekledik ki garantili çevrilsin
         { tr: "Endüstriyel Tasarımcı & Ürün Geliştirici", en: "Industrial Designer & Product Developer" },
         { tr: "Çalışmalarımı Görüntüle", en: "View My Work" },
-        // Hero Uzun Açıklama (TAM CÜMLE)
+        // Hero Uzun Açıklama
         { 
             partial: true, 
             tr: "Form ve işlevi birleştiren yenilikçi ürünler oluşturma konusunda tutkuluyum. Tasarım projelerimi, araştırma çalışmalarımı ve endüstriyel tasarımdaki yolculuğumu keşfedin.", 
@@ -154,13 +165,13 @@
         // --- PORTFOLYO & FİLTRELER ---
         { tr: "Öne Çıkan", en: "Featured" },
         { tr: "Portfolyo", en: "Portfolio" },
-        // Öne Çıkan Uzun Açıklama (TAM CÜMLE)
+        // Öne Çıkan Uzun Açıklama
         { 
             partial: true, 
             tr: "Becerilerimi ve vizyonumu sergileyen tasarım araştırmalarım, profesyonel çalışmalarım ve yenilikçi projelerimden oluşan bir koleksiyon", 
             en: "A collection of my design research, professional work, and innovative projects showcasing my skills and vision." 
         },
-        // Portfolyo Uzun Açıklama (TAM CÜMLE)
+        // Portfolyo Uzun Açıklama
         { 
             partial: true, 
             tr: "Endüstriyel tasarım projelerimi, ürün tasarımlarımı ve çalışmalarımı sergileyen kapsamlı bir dijital portfolyo. Detaylı proje çalışmaları ve tasarım süreci dokümantasyonu içerir.", 
@@ -225,13 +236,13 @@
         { tr: "Staj", en: "Internships" },
         { tr: "20+", en: "20+" },
         { tr: "2", en: "2" },
-        // Hakkımda Uzun Yazı 1 (TAM METİN)
+        // Hakkımda Uzun Yazı 1
         { 
             partial: true, 
             tr: "Ürün geliştirme ve tasarım araştırması konusunda güçlü bir geçmişe sahip tutkulu bir endüstriyel tasarımcıyım. Yolculuğum akademik mükemmelliği, üretim ve Ar-Ge'deki profesyonel stajları ve yenilikçi tasarım projelerini içeriyor.", 
             en: "I am a passionate industrial designer with a strong background in product development and design research. My journey includes academic excellence, professional internships in production and R&D, and innovative design projects." 
         },
-        // Hakkımda Uzun Yazı 2 (TAM METİN)
+        // Hakkımda Uzun Yazı 2
         { 
             partial: true, 
             tr: "Kullanıcı merkezli tasarım, ürün geliştirme ve tasarım araştırması konularında uzmanım. Kariyerim boyunca, dijital arayüzlerden fiziksel ürünlere kadar çeşitli projelerde çalıştım. Düşünceli problem çözme ve yenilikçi düşünme yoluyla insanların hayatlarını iyileştiren ve kolaylık sağlayan anlamlı tasarımlar oluşturmaya kendimi adadım.", 
@@ -283,7 +294,6 @@
                  const text = normalize(elem.innerText); // Yazıyı temizle
                  
                  reactDictionary.forEach(item => {
-                    // Daha önce çevrildiyse pas geç (Performans)
                     if(elem.getAttribute('data-translated') === lang) return;
 
                     if (!item.partial) {
@@ -313,6 +323,9 @@
 
     // --- BAŞLATMA ---
     window.onload = function() {
+        // Görüntü kaymasını önlemek için 'loaded' sınıfını ekle
+        document.body.classList.add('loaded');
+
         const savedLang = safeGetItem('language') || 'en';
         
         applyLanguage(savedLang);
