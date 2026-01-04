@@ -118,7 +118,7 @@
     <button onclick="setLanguage('en')" style="border: none; background: transparent; cursor: pointer; font-weight: bold; padding: 5px;">🇬🇧 EN</button>
 </div>
 
-<!-- ÇEVİRİ SİSTEMİ (NİHAİ - PARÇALI METİN DESTEĞİ) -->
+<!-- ÇEVİRİ SİSTEMİ (CERRAHİ MÜDAHALE MODU) -->
 <script>
     // 1. TIMELINE ÇEVİRİLERİ (SABİT HTML)
     const translations = {
@@ -142,14 +142,13 @@
         }
     };
 
-    // 2. SİTE İÇERİĞİ SÖZLÜĞÜ (TÜM METİNLER TAM VE PARÇALI HALİYLE)
+    // 2. SİTE İÇERİĞİ SÖZLÜĞÜ (TÜM METİNLER)
     const reactDictionary = [
-        // --- İSİM ALANI (BURAYA DİKKAT) ---
-        // Eğer "Merhaba, Ben" ayrı, "Alper" ayrıysa bunları yakalar:
-        { tr: "Merhaba, Ben", en: "Hello, I'm", partial: true },
+        // --- İSİM ALANI (Parçalı ve Bütün Haller) ---
+        // Bu kısım "Merhaba, Ben" yazısını her türlü yakalar
+        { tr: "Merhaba, Ben", en: "Hello, I'm" },
         { tr: "Merhaba,", en: "Hello," },
         { tr: "Ben Alper", en: "I'm Alper" },
-        // Tam cümle hali:
         { tr: "Merhaba, Ben Alper", en: "Hello, I'm Alper" },
 
         // --- MENÜ ---
@@ -276,7 +275,8 @@
 
     // NORMALİZASYON (Görünmez Boşlukları Temizleme)
     function normalize(str) {
-        return str.replace(/\s+/g, ' ').trim();
+        // Normal boşluk ve non-breaking space (NBSP) temizliği
+        return str.replace(/[\s\u00A0]+/g, ' ').trim();
     }
 
     function applyLanguage(lang) {
@@ -291,35 +291,44 @@
             }
         });
 
-        // B. İÇERİK ÇEVİRİSİ (Normalize Edilmiş)
+        // B. İÇERİK ÇEVİRİSİ (CERRAHİ MÜDAHALE: Text Node Taraması)
         const allDom = document.getElementsByTagName("*");
         for (let i = 0; i < allDom.length; i++) {
             const elem = allDom[i];
             
-            // Sadece yazı içeren kutulara bak
-            if (elem.children.length === 0 && elem.innerText && elem.innerText.trim().length > 0) {
-                 const text = normalize(elem.innerText); // Yazıyı temizle
-                 
-                 reactDictionary.forEach(item => {
-                    if(elem.getAttribute('data-translated') === lang) return;
+            // Elementin içindeki TÜM metin parçalarını (Text Nodes) kontrol et
+            // Bu sayede yanında <br> veya <span> olsa bile metni yakalarız.
+            for (let j = 0; j < elem.childNodes.length; j++) {
+                const node = elem.childNodes[j];
+                
+                // Sadece Metin Düğümlerine Bak (Node Type 3)
+                if (node.nodeType === 3) { 
+                    const text = normalize(node.nodeValue);
+                    
+                    if (text.length > 0) {
+                        reactDictionary.forEach(item => {
+                            // Zaten çevrildiyse atla (Parent elementi kontrol ederek)
+                            if(elem.getAttribute('data-translated-' + j) === lang) return;
 
-                    if (!item.partial) {
-                        // Tam Eşleşme
-                        if (text === normalize(item.tr) || text === normalize(item.en)) {
-                            elem.innerText = item[lang];
-                            elem.setAttribute('data-translated', lang);
-                        }
-                    } else {
-                        // Kısmi Eşleşme (İlk 20 karakter)
-                        const searchTr = normalize(item.tr).substring(0, 20);
-                        const searchEn = normalize(item.en).substring(0, 20);
+                            if (!item.partial) {
+                                // Tam Eşleşme
+                                if (text === normalize(item.tr) || text === normalize(item.en)) {
+                                    node.nodeValue = item[lang];
+                                    elem.setAttribute('data-translated-' + j, lang);
+                                }
+                            } else {
+                                // Kısmi Eşleşme (İlk 20 karakter)
+                                const searchTr = normalize(item.tr).substring(0, 20);
+                                const searchEn = normalize(item.en).substring(0, 20);
 
-                        if (text.includes(searchTr) || text.includes(searchEn)) {
-                            elem.innerText = item[lang];
-                            elem.setAttribute('data-translated', lang);
-                        }
+                                if (text.includes(searchTr) || text.includes(searchEn)) {
+                                    node.nodeValue = item[lang];
+                                    elem.setAttribute('data-translated-' + j, lang);
+                                }
+                            }
+                        });
                     }
-                 });
+                }
             }
         }
     }
